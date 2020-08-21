@@ -22,7 +22,7 @@
     width: 450px;
     height: 350px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.65);
 
     display: flex;
     flex-direction: column;
@@ -32,9 +32,8 @@
 
 .landing-title{
     margin-top: 0;
-    /*margin-top: 75px;*/
     margin-bottom: 25px;
-    color: rgb(255, 255, 255);
+    color: black;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 40px;
 }
@@ -53,7 +52,15 @@
     background: rgba(255,255,255,1);
     padding: 10px 0 10px 15px;
     border: none;
-    border-radius: 15px;
+    border-radius: 18px;
+}
+
+.landing-login-input.disabled {
+    pointer-events: none;
+}
+
+.landing-login-input.invalid {
+    color:red;
 }
 
 .landing-login-input::placeholder {
@@ -66,24 +73,25 @@
     justify-content: center;
 }
 
+.login-submit-margin-top{
+    margin-top: 10px;
+}
+
 .landing-login-submit{
     width: 25%;
     height: 40px;
     outline: none;
     font: 15px Helvetica Neue, sans-serif;
     background: rgba(255,255,255,1);
-    padding: 10px 5px;
+    color: black;
     border: none;
-    border-radius: 15px;
-    margin-bottom: 0;
+    border-radius: 18px;
+    transition: background 0.15s ease-in-out, background-color 0.35s ease-in-out;
 }
 
 .landing-login-submit:hover{
     cursor: pointer;
-}
-
-.landing-login-submit:active{
-    color: black;
+    background: rgba(225,225,225,0.95);
 }
 
 .landing-login-submit.processing{
@@ -93,50 +101,16 @@
     transition: width 0.3s ease-in-out, border-radius 0.25s ease-in-out;
 }
 
-.landing-login-submit.success{
-    color: rgba(0,0,0,0);
-    background-color: rgb(0, 122, 0);
-    width: 40px;
-    border-radius: 50%;
-    transition: background-color 0.5s ease-in-out;
-}
-
 .landing-login-loading-icon{
     position: absolute;
-    margin-top: 0;
     display: inline-block;
     width: 40px;
     height: 40px;
+    animation: loading-icon-anim 1.2s linear infinite;
 }
 
 .landing-login-loading-icon.hide{
     display: none;
-}
-
-.landing-login-loading-icon:after {
-    content: " ";
-    display: block;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-}
-
-.landing-login-loading-icon.processing:after {
-    border: 3px solid #ffffff;
-    border-color: #274CFF transparent #274cff transparent;
-    animation: loading-icon-anim 1.2s linear infinite;
-}
-
-.landing-login-loading-icon.success:after {
-    border: 3px solid #00870a;
-    transition: border 0.5s ease-in-out, animation 0.5s ease-in-out;
-    animation: loading-icon-anim 1.2s linear infinite;
-}
-
-.landing-login-loading-icon.failure:after {
-    border: 3px solid #ce0005;
-    transition: border 0.5s ease-in-out, animation 0.5s ease-in-out;
-    animation: loading-icon-anim 1.2s linear infinite;
 }
 
 .landing-login-checkmark-icon.hide{
@@ -146,10 +120,10 @@
 .landing-login-checkmark-icon.success{
     display: block;
     position: absolute;
-    margin-top: 8px;
+    margin-top: 19px;
 
-    width: 24px;
-    height: 24px;
+    width: 22px;
+    height: 22px;
 
     transition: 0.5s ease-in-out;
 }
@@ -161,12 +135,34 @@
 .landing-login-failure-icon.failure{
     display: block;
     position: absolute;
-    margin-top: 10px;
+    margin-top: 20px;
 
     width: 20px;
     height: 20px;
 
     transition: 0.5s ease-in-out;
+}
+
+.landing-login-success-ring{
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+
+.landing-login-success-ring.hide{
+    display: none;
+}
+
+.landing-login-failure-ring{
+    position: absolute;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+
+.landing-login-failure-ring.hide{
+    display: none;
 }
 
 @keyframes loading-icon-anim {
