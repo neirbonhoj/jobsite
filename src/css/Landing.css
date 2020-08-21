@@ -1,0 +1,79 @@
+.landing-background{
+    min-height: 100vh;
+    background-image: url('../assets/skyline-background.jpg');
+    background-size: cover;
+}
+
+.blur {
+    min-width: 100%;
+    min-height: 100vh;
+
+    background: rgba(255, 255, 255, 0.01);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.landing-container{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 450px;
+    height: 350px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.landing-title{
+    margin-top: 0;
+    /*margin-top: 75px;*/
+    margin-bottom: 25px;
+    color: rgb(255, 255, 255);
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 40px;
+}
+
+.landing-login-form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.landing-login-input {
+    width: 50%;
+    outline: none;
+    font: 15px Helvetica Neue, sans-serif;
+    background: rgba(255,255,255,1);
+    padding: 10px 0 10px 15px;
+    border: none;
+    border-radius: 15px;
+}
+
+.landing-login-input::placeholder {
+    color: black;
+}
+
+.landing-login-submit{
+    width: 25%;
+    outline: none;
+    font: 15px Helvetica Neue, sans-serif;
+    background: rgba(255,255,255,1);
+    padding: 10px 5px;
+    border: none;
+    border-radius: 15px;
+}
+
+.landing-login-submit:hover{
+    cursor: pointer;
+}
+
+.landing-login-submit:active{
+    color: black;
+}
