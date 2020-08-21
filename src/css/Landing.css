@@ -60,14 +60,22 @@
     color: black;
 }
 
+.landing-login-submit-container{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .landing-login-submit{
     width: 25%;
+    height: 40px;
     outline: none;
     font: 15px Helvetica Neue, sans-serif;
     background: rgba(255,255,255,1);
     padding: 10px 5px;
     border: none;
     border-radius: 15px;
+    margin-bottom: 0;
 }
 
 .landing-login-submit:hover{
@@ -77,3 +85,96 @@
 .landing-login-submit:active{
     color: black;
 }
+
+.landing-login-submit.processing{
+    color: rgba(0,0,0,0);
+    width: 40px;
+    border-radius: 50%;
+    transition: width 0.3s ease-in-out, border-radius 0.25s ease-in-out;
+}
+
+.landing-login-submit.success{
+    color: rgba(0,0,0,0);
+    background-color: rgb(0, 122, 0);
+    width: 40px;
+    border-radius: 50%;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.landing-login-loading-icon{
+    position: absolute;
+    margin-top: 0;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+}
+
+.landing-login-loading-icon.hide{
+    display: none;
+}
+
+.landing-login-loading-icon:after {
+    content: " ";
+    display: block;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+}
+
+.landing-login-loading-icon.processing:after {
+    border: 3px solid #ffffff;
+    border-color: #274CFF transparent #274cff transparent;
+    animation: loading-icon-anim 1.2s linear infinite;
+}
+
+.landing-login-loading-icon.success:after {
+    border: 3px solid #00870a;
+    transition: border 0.5s ease-in-out, animation 0.5s ease-in-out;
+    animation: loading-icon-anim 1.2s linear infinite;
+}
+
+.landing-login-loading-icon.failure:after {
+    border: 3px solid #ce0005;
+    transition: border 0.5s ease-in-out, animation 0.5s ease-in-out;
+    animation: loading-icon-anim 1.2s linear infinite;
+}
+
+.landing-login-checkmark-icon.hide{
+    display: none;
+}
+
+.landing-login-checkmark-icon.success{
+    display: block;
+    position: absolute;
+    margin-top: 8px;
+
+    width: 24px;
+    height: 24px;
+
+    transition: 0.5s ease-in-out;
+}
+
+.landing-login-failure-icon.hide{
+    display: none;
+}
+
+.landing-login-failure-icon.failure{
+    display: block;
+    position: absolute;
+    margin-top: 10px;
+
+    width: 20px;
+    height: 20px;
+
+    transition: 0.5s ease-in-out;
+}
+
+@keyframes loading-icon-anim {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
