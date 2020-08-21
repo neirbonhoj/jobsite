@@ -1,6 +1,7 @@
 import React from "react";
 import '../css/Landing.css'
 
+import arrow from '../assets/arrow.svg'
 import loading from '../assets/loading.svg'
 import checkmark from '../assets/check.svg'
 import successring from '../assets/success-ring.svg'
@@ -18,9 +19,7 @@ class Landing extends Component {
     this.state = {
       landing_login_email: '',
       landing_login_password: '',
-      processing_login: false,
-      successful_login: false,
-      failed_login: false
+      confirmed_email: false
     }
 
     this.onLogin = this.onLogin.bind(this);
@@ -51,65 +50,32 @@ class Landing extends Component {
   }
 
   render() {
-    // Animation of the login form submit button
-    //    Arrays are used to store class names dynamically for HTML elements
-    //    processing  = waiting for server response
-    //    success     = server has logged us in
-    //    failed      = credentials are invalid
-    //    hide        = user has not submitted the form
-    let submitButtonClasses = ['landing-login-submit', 'login-submit-margin-top'];
-    let loadingIconClasses = ['landing-login-loading-icon', 'login-submit-margin-top'];
-    let checkmarkIconClasses = ['landing-login-checkmark-icon'];
-    let successRingClasses = ['landing-login-success-ring', 'login-submit-margin-top'];
-    let failureIconClasses = ['landing-login-failure-icon'];
-    let failureRingClasses = ['landing-login-failure-ring', 'login-submit-margin-top'];
-
+    let emailArrowClasses = ['login-email-arrow']
+    let passwordArrowClasses = ['login-password-arrow']
 
     let emailInputClasses = ['landing-login-input']
     let passwordInputClasses = ['landing-login-input']
 
-    if(this.state.processing_login){
-      emailInputClasses.push('disabled')
-      passwordInputClasses.push('disabled')
-
-      submitButtonClasses.push('processing')
-      loadingIconClasses.push('processing')
-      checkmarkIconClasses.push('hide')
-      failureIconClasses.push('hide')
-      successRingClasses.push('hide')
-      failureRingClasses.push('hide')
-    } else if(this.state.successful_login) {
-      emailInputClasses.push('disabled')
-      passwordInputClasses.push('disabled')
-
-      submitButtonClasses.push('processing')
-      loadingIconClasses.push('hide')
-      checkmarkIconClasses.push('success')
-      failureIconClasses.push('hide')
-      successRingClasses.push('success')
-      failureRingClasses.push('hide')
-    } else if(this.state.failed_login) {
-      submitButtonClasses.push('processing')
-      loadingIconClasses.push('hide')
-      checkmarkIconClasses.push('hide')
-      failureIconClasses.push('failure')
-      successRingClasses.push('hide')
-      failureRingClasses.push('failure')
-    } else {
-      loadingIconClasses.push('hide')
-      checkmarkIconClasses.push('hide')
-      failureIconClasses.push('hide')
-      successRingClasses.push('hide')
-      failureRingClasses.push('hide')
+    if(this.state.confirmed_email){
+      emailInputClasses.push('topborderonly');
+      passwordInputClasses.push('show');
+      passwordArrowClasses.push('show');
     }
 
     // Checks on input values
-
-    if(this.state.landing_login_password.length < 6 && this.state.landing_login_password.length > 0) {
-      passwordInputClasses.push('invalid')
+    let validEmail = true
+    if(this.state.landing_login_password.length < 6) {
+      passwordArrowClasses.push('disabled')
     }
+
     if(this.state.landing_login_email.length > 0 && !emailregex.test(this.state.landing_login_email)){
-      emailInputClasses.push('invalid')
+      validEmail = false
+    } else if(this.state.landing_login_email.length <= 0){
+      validEmail = false
+    }
+
+    if(!validEmail){
+      emailArrowClasses.push('disabled')
     }
 
     return (
@@ -117,18 +83,14 @@ class Landing extends Component {
         <div className='blur'>
           <div className='landing-container'>
             <h1 className='landing-title'>Larkin Motors</h1>
-            <form className='landing-login-form' onSubmit={this.onLogin}>
-              <input className={emailInputClasses.join(' ')} type='text' name='landing_login_email' onChange={this.onInputChange} placeholder='Email'/>
-              <input className={passwordInputClasses.join(' ')} type='password' name='landing_login_password' onChange={this.onInputChange} placeholder='Password'/>
-              <div className='landing-login-submit-container'>
-                <button className={submitButtonClasses.join(' ')}>Sign In</button>
-                <img className={loadingIconClasses.join(' ')} src={loading} alt='loading'/>
-                <img className={checkmarkIconClasses.join(' ')} src={checkmark} alt='checkmark'/>
-                <img className={successRingClasses.join(' ')} src={successring} alt='successring'/>
-                <img className={failureIconClasses.join(' ')} src={failure} alt='failure'/>
-                <img className={failureRingClasses.join(' ')} src={failurering} alt='failurering'/>
-              </div>
-            </form>
+            <div className='email-input-container'>
+              <input id='email-input' className={emailInputClasses.join(' ')} type='text' name='landing_login_email' onChange={this.onInputChange} placeholder='Email'/>
+              <img className={emailArrowClasses.join(' ')} src={arrow} alt='arrow'/>
+            </div>
+            <div className='password-input-container'>
+              <input id='password-input' className={passwordInputClasses.join(' ')} type='password' name='landing_login_password' onChange={this.onInputChange} placeholder='Password'/>
+              <img className={passwordArrowClasses.join(' ')} src={arrow} alt='arrow'/>
+            </div>
           </div>
         </div>
       </div>
