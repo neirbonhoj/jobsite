@@ -110,12 +110,15 @@ class Landing extends Component {
       containerClasses.push('processing')
     }
 
+    let pageStatus = 'Log in to your account'
+
     return (
       <div className='landing-background'>
         <div className='blur'>
           <div className={containerClasses.join(' ')}>
             <div className='login-form-container'>
               <h1 className='landing-title'>Larkin Motors</h1>
+              <h2 className='landing-subtitle'>{pageStatus}</h2>
               <div className='email-input-container'>
                 <input id='email-input' className={emailInputClasses.join(' ')} type='text' name='landing_login_email' onChange={this.onInputChange} onKeyDown={this.handleKeyDown} placeholder='Email'/>
               </div>
@@ -124,6 +127,7 @@ class Landing extends Component {
               </div>
               <button className={submitButtonClasses.join(' ')} disabled={!validEmail || !validPassword} onClick={this.onLogin}>Submit</button>
             </div>
+            <h2 className='create-account-link'>Create Account</h2>
           </div>
         </div>
       </div>

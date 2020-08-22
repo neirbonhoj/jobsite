@@ -1,6 +1,6 @@
 .landing-background{
     min-height: 100vh;
-    background-image: url('../assets/tesla-background.jpg');
+    background-image: url('../assets/f1-background.jpg');
     background-size: cover;
 }
 
@@ -9,8 +9,8 @@
     min-height: 100vh;
 
     background: rgba(255, 255, 255, 0.01);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
 }
 
 .landing-container{
@@ -57,11 +57,20 @@
 
 .landing-title{
     margin-top: 0;
-    margin-bottom: 25px;
+    padding: 0;
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 40px;
     align-self: center;
+}
+
+.landing-subtitle{
+    margin-top: -20px;
+    color: white;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 20px;
+    align-self: center;
+    font-weight: normal;
 }
 
 .email-input-container{
@@ -97,7 +106,7 @@
     outline: none;
     font: 15px Helvetica Neue, sans-serif;
     background: rgba(255,255,255,1);
-    padding: 10px 40px 10px 15px;
+    padding: 10px 10px 10px 15px;
     border: none;
     border-radius: 6px;
 }
@@ -160,6 +169,24 @@
 
 .login-submit-button:disabled{
     background-color: rgba(255,255,255,0.8);
+}
+
+.create-account-link{
+    position: absolute;
+    align-self: center;
+    top: calc(100% - 10px);
+    transform: translateY(-100%);
+
+    margin: 0;
+    padding: 0;
+
+    color: white;
+    font: 15px Helvetica Neue, sans-serif;
+}
+
+.create-account-link:hover{
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 @keyframes loading-icon-anim {
