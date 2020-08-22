@@ -1,6 +1,6 @@
 .landing-background{
     min-height: 100vh;
-    background-image: url('../assets/skyline-background.jpg');
+    background-image: url('../assets/tesla-background.jpg');
     background-size: cover;
 }
 
@@ -9,7 +9,7 @@
     min-height: 100vh;
 
     background: rgba(255, 255, 255, 0.01);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(8px);
 }
 
@@ -21,10 +21,37 @@
 
     width: 450px;
     height: 350px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 6px;
 
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+}
+
+.landing-container.success{
+    border: 2px solid green;
+    transition: border 0.5s ease-in-out;
+}
+
+.landing-container.failure{
+    border: 2px solid red;
+    transition: border 0.5s ease-in-out;
+}
+
+.landing-container.processing{
+    border: 2px solid blue;
+    transition: border 0.25s ease-in-out;
+}
+
+.login-form-container{
+    height: 100%;
+    width: 60%;
+
+    align-self: center;
+
+    display: flex;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -34,13 +61,15 @@
     color: white;
     font-family: 'Helvetica Neue', sans-serif;
     font-size: 40px;
+    align-self: center;
 }
 
 .email-input-container{
     position: relative;
 
     height: 30px;
-    width: 60%;
+    width: 100%;
+    align-self: center;
 
     display: flex;
     flex-direction: row;
@@ -52,58 +81,14 @@
     position: relative;
 
     height: 30px;
+    width: 100%;
     margin-top: 10px;
-    width: 60%;
+    align-self: center;
 
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-}
-
-.login-email-arrow{
-    width: 28px;
-    opacity: 1;
-    position: absolute;
-    left: 100%;
-    transform: translateX(calc(-100% - 5px));
-    transition: opacity 0.4s ease-in-out;
-}
-
-.login-email-arrow:hover{
-    cursor: pointer;
-}
-
-.login-email-arrow.disabled{
-    opacity: 0.75;
-    cursor: auto;
-}
-
-.login-email-arrow.hide{
-    display: none;
-}
-
-.login-password-arrow{
-    display: none;
-    width: 28px;
-    opacity: 1;
-    position: absolute;
-    left: 100%;
-    transform: translateX(calc(-100% - 5px));
-}
-
-.login-password-arrow:hover{
-    cursor: pointer;
-}
-
-.login-password-arrow.disabled{
-    opacity: 0.75;
-    cursor: auto;
-}
-
-.login-password-arrow.show{
-    display: block;
-    animation: delay-show 0.5s linear;
 }
 
 .landing-login-input {
@@ -117,25 +102,26 @@
     border-radius: 6px;
 }
 
-.landing-login-input.disabled {
-    pointer-events: none;
+.landing-login-input.failure {
+    color:red;
+    transition: color 0.5s ease-in-out;
 }
 
-.landing-login-input.invalid {
+.landing-login-input.failure::placeholder {
     color:red;
+    transition: color 0.5s ease-in-out;
+}
+
+.password-input-container.failure {
+    color:red;
+    transition: color 0.5s ease-in-out;
 }
 
 .landing-login-input::placeholder {
     color: black;
 }
 
-.landing-login-submit-container{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-#email-input.topborderonly{
+#email-input{
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 
@@ -144,124 +130,36 @@
 }
 
 #password-input{
-    display: none;
-}
-
-#password-input.show{
     display: block;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
-    animation: slide-down 0.5s linear;
 }
 
-.login-submit-margin-top{
+.login-submit-button{
+    align-self: center;
+    width: 100%;
+    height: 30px;
+
     margin-top: 10px;
-}
+    padding: 6px;
+    background-color: rgba(255,255,255,1);
 
-.landing-login-submit{
-    width: 25%;
-    height: 40px;
-    outline: none;
-    font: 15px Helvetica Neue, sans-serif;
-    background: rgba(255,255,255,1);
-    color: black;
     border: none;
-    border-radius: 18px;
-    transition: background 0.15s ease-in-out, background-color 0.35s ease-in-out;
+    border-radius: 6px;
+
+    transition: all 0.4s;
 }
 
-.landing-login-submit:hover{
+.login-submit-button:hover{
     cursor: pointer;
-    background: rgba(225,225,225,0.95);
 }
 
-.landing-login-submit.processing{
-    color: rgba(0,0,0,0);
-    width: 40px;
-    border-radius: 50%;
-    transition: width 0.3s ease-in-out, border-radius 0.25s ease-in-out;
+.login-submit-button:disabled:hover{
+    cursor: auto;
 }
 
-.landing-login-loading-icon{
-    position: absolute;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-    animation: loading-icon-anim 1.2s linear infinite;
-}
-
-.landing-login-loading-icon.hide{
-    display: none;
-}
-
-.landing-login-checkmark-icon.hide{
-    display: none;
-}
-
-.landing-login-checkmark-icon.success{
-    display: block;
-    position: absolute;
-    margin-top: 19px;
-
-    width: 22px;
-    height: 22px;
-
-    transition: 0.5s ease-in-out;
-}
-
-.landing-login-failure-icon.hide{
-    display: none;
-}
-
-.landing-login-failure-icon.failure{
-    display: block;
-    position: absolute;
-    margin-top: 20px;
-
-    width: 20px;
-    height: 20px;
-
-    transition: 0.5s ease-in-out;
-}
-
-.landing-login-success-ring{
-    position: absolute;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-}
-
-.landing-login-success-ring.hide{
-    display: none;
-}
-
-.landing-login-failure-ring{
-    position: absolute;
-    display: inline-block;
-    width: 40px;
-    height: 40px;
-}
-
-.landing-login-failure-ring.hide{
-    display: none;
-}
-
-@keyframes slide-down {
-    0% {
-        transform: translateY(-100%);
-    }
-    100% {
-        transform: translateY(0);
-    }
-}
-
-@keyframes delay-show {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 75%;
-    }
+.login-submit-button:disabled{
+    background-color: rgba(255,255,255,0.8);
 }
 
 @keyframes loading-icon-anim {
