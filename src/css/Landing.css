@@ -67,6 +67,7 @@
     position: absolute;
     left: 100%;
     transform: translateX(calc(-100% - 5px));
+    transition: opacity 0.4s ease-in-out;
 }
 
 .login-email-arrow:hover{
@@ -76,6 +77,10 @@
 .login-email-arrow.disabled{
     opacity: 0.75;
     cursor: auto;
+}
+
+.login-email-arrow.hide{
+    display: none;
 }
 
 .login-password-arrow{
@@ -98,6 +103,7 @@
 
 .login-password-arrow.show{
     display: block;
+    animation: delay-show 0.5s linear;
 }
 
 .landing-login-input {
@@ -134,6 +140,7 @@
     border-bottom-left-radius: 0;
 
     border-bottom: 1px solid black;
+    z-index: 1;
 }
 
 #password-input{
@@ -144,6 +151,7 @@
     display: block;
     border-top-right-radius: 0;
     border-top-left-radius: 0;
+    animation: slide-down 0.5s linear;
 }
 
 .login-submit-margin-top{
@@ -236,6 +244,24 @@
 
 .landing-login-failure-ring.hide{
     display: none;
+}
+
+@keyframes slide-down {
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes delay-show {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 75%;
+    }
 }
 
 @keyframes loading-icon-anim {

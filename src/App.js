@@ -1,10 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
-
+import { firebaseConfig } from "./firebaseconfig";
 import Landing from './pages/Landing';
 import Contact from "./pages/Contact";
 
+import * as firebase from "firebase/app";
+
 function App() {
+  firebase.initializeApp(firebaseConfig)
   return (
     <Router>
       <div>

@@ -1,16 +1,18 @@
-import React from "react";
+import React from "react"
 import '../css/Landing.css'
 
-import arrow from '../assets/arrow.svg'
+import continueicon from '../assets/continue.svg'
 import loading from '../assets/loading.svg'
 import checkmark from '../assets/check.svg'
 import successring from '../assets/success-ring.svg'
 import failure from '../assets/failure.svg'
 import failurering from '../assets/failure-ring.svg'
 
-const { Component } = require("react");
+const { Component } = require("react")
 const emailregex = new RegExp("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\\])")
 
+const firebase = require("firebase/app");
+require("firebase/auth");
 
 class Landing extends Component {
   constructor(props) {
@@ -19,27 +21,26 @@ class Landing extends Component {
     this.state = {
       landing_login_email: '',
       landing_login_password: '',
+      processing_email: false,
       confirmed_email: false
     }
 
     this.onLogin = this.onLogin.bind(this);
-    this.setSuccess = this.setSuccess.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
   }
 
   onLogin(e){
     e.preventDefault();
     this.setState({
-      processing_login: true
+      processing_email: true
     })
-    setInterval(this.setSuccess, 1500)
-  }
 
-  setSuccess(){
-    this.setState({
-      processing_login: false,
-      successful_login: false,
-      failed_login: true
+    firebase.auth().fetchSignInMethodsForEmail(this.state.landing_login_email).then((signInMethods) => {
+      if(signInMethods.includes('password')){
+        this.setState({
+          confirmed_email: true
+        })
+      }
     })
   }
 
@@ -58,6 +59,7 @@ class Landing extends Component {
 
     if(this.state.confirmed_email){
       emailInputClasses.push('topborderonly');
+      emailArrowClasses.push('hide');
       passwordInputClasses.push('show');
       passwordArrowClasses.push('show');
     }
@@ -85,11 +87,11 @@ class Landing extends Component {
             <h1 className='landing-title'>Larkin Motors</h1>
             <div className='email-input-container'>
               <input id='email-input' className={emailInputClasses.join(' ')} type='text' name='landing_login_email' onChange={this.onInputChange} placeholder='Email'/>
-              <img className={emailArrowClasses.join(' ')} src={arrow} alt='arrow'/>
+              <img className={emailArrowClasses.join(' ')} onClick={this.onLogin} src={continueicon} alt='arrow'/>
             </div>
             <div className='password-input-container'>
               <input id='password-input' className={passwordInputClasses.join(' ')} type='password' name='landing_login_password' onChange={this.onInputChange} placeholder='Password'/>
-              <img className={passwordArrowClasses.join(' ')} src={arrow} alt='arrow'/>
+              <img className={passwordArrowClasses.join(' ')} src={continueicon} alt='arrow'/>
             </div>
           </div>
         </div>
