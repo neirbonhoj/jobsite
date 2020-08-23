@@ -1,5 +1,6 @@
 import React from "react"
 import '../css/Landing.css'
+import shortid from "shortid";
 
 const { Component } = require("react")
 // eslint-disable-next-line
@@ -15,79 +16,118 @@ class Landing extends Component {
     this.state = {
       landing_login_email: '',
       landing_login_password: '',
-      creating_account: false
+      landing_confirm_password: '',
+      creating_account: false,
+      confirm_id: this.getId()
     }
 
-    this.onLogin = this.onLogin.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleCreateAccount = this.handleCreateAccount.bind(this);
   }
 
-  onLogin(e){
+  onSubmit(e){
     if(e){
       e.preventDefault();
     }
     this.setState({
-      processing_login: true
+      processing_login: true,
+      successful_login: false
     })
-    firebase.auth().signInWithEmailAndPassword(this.state.landing_login_email, this.state.landing_login_password)
-      .then((credential) => {
-        this.setState({
-          processing_login: false,
-          successful_login: true,
-          failed_login: false,
-          failed_password: false,
-          failed_email: false
-        })
-      }, ((rejection) => {
-        if(rejection.code === 'auth/wrong-password'){
+
+    if(this.state.creating_account){
+      firebase.auth().createUserWithEmailAndPassword(this.state.landing_login_email, this.state.landing_login_password)
+        .then((credential) => {
           this.setState({
             processing_login: false,
-            failed_login: true,
-            failed_password: true,
+            successful_login: true,
+            failed_login: false,
+            failed_password: false,
             failed_email: false
           })
-        } else if(rejection.code === 'auth/user-not-found' || rejection.code === 'auth/invalid-email'){
+        }, ((rejection) => {
+          if(rejection.code === 'auth/email-already-in-use'){
+            this.setState({
+              processing_login: false,
+              failed_login: true,
+              failed_email: true,
+              failed_password: false
+            })
+          }
+        }))
+    } else {
+      firebase.auth().signInWithEmailAndPassword(this.state.landing_login_email, this.state.landing_login_password)
+        .then((credential) => {
           this.setState({
             processing_login: false,
-            failed_login: true,
-            failed_email: true,
-            failed_password: false
+            successful_login: true,
+            failed_login: false,
+            failed_password: false,
+            failed_email: false
           })
-        }
-      })).catch((error) => {
+        }, ((rejection) => {
+          if(rejection.code === 'auth/wrong-password'){
+            this.setState({
+              processing_login: false,
+              failed_login: true,
+              failed_password: true,
+              failed_email: false
+            })
+          } else if(rejection.code === 'auth/user-not-found' || rejection.code === 'auth/invalid-email'){
+            this.setState({
+              processing_login: false,
+              failed_login: true,
+              failed_email: true,
+              failed_password: false
+            })
+          }
+        })).catch((error) => {
         console.log(error)
-    })
+      })
+    }
   }
 
   handleCreateAccount(){
     let current = this.state.creating_account
     this.setState({
-      creating_account: !current
-    })
-  }
-
-  onInputChange(e){
-    this.setState({
+      creating_account: !current,
       successful_login: false,
       failed_login: false,
       failed_password: false,
       failed_email: false,
-      [e.target.name]: e.target.value
-    });
+      confirm_id: this.getId(),
+    })
+  }
+
+  onInputChange(e){
+    if(!this.state.processing_login && !this.state.successful_login){
+      this.setState({
+        successful_login: false,
+        failed_login: false,
+        failed_password: false,
+        failed_email: false,
+        [e.target.name]: e.target.value
+      });
+    }
   }
 
   handleKeyDown(e){
     if (e.key === 'Enter') {
-      this.onLogin()
+      this.onSubmit()
     }
   }
 
+  getId = () => {
+    return shortid.generate();
+  };
+
   render() {
     let containerClasses = ['landing-container']
+    let passwordConfirmContainerClasses = ['password-confirm-container']
     let emailInputClasses = ['landing-login-input']
     let passwordInputClasses = ['landing-login-input']
+    let passwordConfirmClasses = ['landing-login-input']
     let submitButtonClasses = ['login-submit-button']
 
     // Checks on input values
@@ -108,6 +148,7 @@ class Landing extends Component {
     }
 
     if(this.state.successful_login){
+      validPassword = false
       containerClasses.push('success')
     } else if(this.state.failed_login){
       if(this.state.failed_email){
@@ -117,7 +158,19 @@ class Landing extends Component {
       }
       containerClasses.push('failure')
     } else if(this.state.processing_login){
+      validPassword = false
       containerClasses.push('processing')
+    }
+
+    if(this.state.creating_account){
+      passwordInputClasses.push('square-border');
+      passwordConfirmClasses.push('show')
+      submitButtonClasses.push('shift-down')
+      containerClasses.push('expand')
+
+      if(!(this.state.landing_login_password === this.state.landing_confirm_password)){
+        validPassword = false
+      }
     }
 
     return (
@@ -135,7 +188,12 @@ class Landing extends Component {
               <div className='password-input-container'>
                 <input id='password-input' className={passwordInputClasses.join(' ')} type='password' name='landing_login_password' onChange={this.onInputChange} onKeyDown={this.handleKeyDown} placeholder='Password'/>
               </div>
-              <button className={submitButtonClasses.join(' ')} disabled={!validEmail || !validPassword} onClick={this.onLogin}>Submit</button>
+              <div className='login-form-bottom-container'>
+                <div key={this.state.confirm_id} className={passwordConfirmContainerClasses.join(' ')}>
+                  <input id='password-confirm-input' className={passwordConfirmClasses.join(' ')} type='password' name='landing_confirm_password' onChange={this.onInputChange} onKeyDown={this.handleKeyDown} placeholder='Confirm Password'/>
+                </div>
+                <button className={submitButtonClasses.join(' ')} disabled={!validEmail || !validPassword} onClick={this.onSubmit}>Submit</button>
+              </div>
             </div>
             <h2 className='create-account-link' onClick={this.handleCreateAccount}>{
               (this.state.creating_account) ? 'Return' : 'Create Account'
