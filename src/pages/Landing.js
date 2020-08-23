@@ -46,6 +46,12 @@ class Landing extends Component {
             failed_password: false,
             failed_email: false
           })
+
+          setTimeout( () => {
+            this.setState( prevState => ({
+              login_container_expand: true
+            }));
+          }, 1250);
         }, ((rejection) => {
           if(rejection.code === 'auth/email-already-in-use'){
             this.setState({
@@ -66,6 +72,12 @@ class Landing extends Component {
             failed_password: false,
             failed_email: false
           })
+
+          setTimeout( () => {
+            this.setState( prevState => ({
+              login_container_expand: true
+            }));
+          }, 1250);
         }, ((rejection) => {
           if(rejection.code === 'auth/wrong-password'){
             this.setState({
@@ -124,11 +136,13 @@ class Landing extends Component {
 
   render() {
     let containerClasses = ['landing-container']
+    let loginFormClasses = ['login-form-container']
     let passwordConfirmContainerClasses = ['password-confirm-container']
     let emailInputClasses = ['landing-login-input']
     let passwordInputClasses = ['landing-login-input']
     let passwordConfirmClasses = ['landing-login-input']
     let submitButtonClasses = ['login-submit-button']
+    let createAccountClasses = ['create-account-link']
 
     // Checks on input values
     let validEmail = true
@@ -150,6 +164,12 @@ class Landing extends Component {
     if(this.state.successful_login){
       validPassword = false
       containerClasses.push('success')
+
+      if(this.state.login_container_expand){
+        loginFormClasses.push('hide')
+        createAccountClasses.push('hide')
+        containerClasses.push('expand-full')
+      }
     } else if(this.state.failed_login){
       if(this.state.failed_email){
         emailInputClasses.push('failure')
@@ -177,7 +197,7 @@ class Landing extends Component {
       <div className='landing-background'>
         <div className='blur'>
           <div className={containerClasses.join(' ')}>
-            <div className='login-form-container'>
+            <div className={loginFormClasses.join(' ')}>
               <h1 className='landing-title'>Larkin Motors</h1>
               <h2 className='landing-subtitle'>{
                 (this.state.creating_account) ? 'Create an account' : 'Log in to your account'
@@ -195,7 +215,7 @@ class Landing extends Component {
                 <button className={submitButtonClasses.join(' ')} disabled={!validEmail || !validPassword} onClick={this.onSubmit}>Submit</button>
               </div>
             </div>
-            <h2 className='create-account-link' onClick={this.handleCreateAccount}>{
+            <h2 className={createAccountClasses.join(' ')} onClick={this.handleCreateAccount}>{
               (this.state.creating_account) ? 'Return' : 'Create Account'
             }</h2>
           </div>
