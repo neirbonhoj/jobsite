@@ -1,11 +1,11 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyD8XAdhGlnFvxi0QLe-6KS40bsjvzi8Pe8",
-  authDomain: "jobsite-16764.firebaseapp.com",
-  databaseURL: "https://jobsite-16764.firebaseio.com",
-  projectId: "jobsite-16764",
-  storageBucket: "jobsite-16764.appspot.com",
-  messagingSenderId: "889800829822",
-  appId: "1:889800829822:web:0e03e006dedcbb7e60212f"
+  apiKey: "AIzaSyB3B4Qf9zGNJxFizYwtUcLmr581k5HDoPw",
+  authDomain: "jobsite-6c5e5.firebaseapp.com",
+  databaseURL: "https://jobsite-6c5e5.firebaseio.com",
+  projectId: "jobsite-6c5e5",
+  storageBucket: "jobsite-6c5e5.appspot.com",
+  messagingSenderId: "148584608343",
+  appId: "1:148584608343:web:63ff640304c01025ba6912"
 };
 
 export {firebaseConfig}

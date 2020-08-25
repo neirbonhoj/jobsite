@@ -14,6 +14,7 @@ class Landing extends Component {
     super(props);
 
     this.state = {
+      view: null,
       landing_login_email: '',
       landing_login_password: '',
       landing_confirm_password: '',
@@ -31,6 +32,7 @@ class Landing extends Component {
     if(e){
       e.preventDefault();
     }
+
     this.setState({
       processing_login: true,
       successful_login: false
@@ -49,7 +51,8 @@ class Landing extends Component {
 
           setTimeout( () => {
             this.setState( prevState => ({
-              login_container_expand: true
+              login_container_expand: true,
+              successful_login: false
             }));
           }, 1250);
         }, ((rejection) => {
@@ -75,7 +78,8 @@ class Landing extends Component {
 
           setTimeout( () => {
             this.setState( prevState => ({
-              login_container_expand: true
+              login_container_expand: true,
+              successful_login: false
             }));
           }, 1250);
         }, ((rejection) => {
@@ -161,15 +165,15 @@ class Landing extends Component {
       validPassword = false
     }
 
+    if(this.state.login_container_expand){
+      loginFormClasses.push('hide')
+      createAccountClasses.push('hide')
+      containerClasses.push('expand-full')
+    }
+
     if(this.state.successful_login){
       validPassword = false
       containerClasses.push('success')
-
-      if(this.state.login_container_expand){
-        loginFormClasses.push('hide')
-        createAccountClasses.push('hide')
-        containerClasses.push('expand-full')
-      }
     } else if(this.state.failed_login){
       if(this.state.failed_email){
         emailInputClasses.push('failure')
