@@ -1,2 +1,2 @@
 ## JOBSite (John O'Brien Website)
-Web app built with React.
+Example web app login page built React.
