@@ -1,2 +1,2 @@
-## JOBSite (John O'Brien Website)
+## JOBSite
 Example web app login page built with React.
